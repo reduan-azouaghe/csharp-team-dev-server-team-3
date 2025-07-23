@@ -5,6 +5,6 @@ public class Cohort
     public int Id { get; set; }
     public required string Name { get; set; }
 
-    public List<User> Users { get; set; }
-    public List<DeliveryLog> DeliveryLogs { get; set; }
+    //public List<User> User { get; set; }
+    //public List<DeliveryLog> DeliveryLogs { get; set; }
 }

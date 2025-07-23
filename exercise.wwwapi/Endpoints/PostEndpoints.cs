@@ -7,8 +7,8 @@ namespace exercise.wwwapi.Endpoints
         public static void ConfigurePostEndpoints(this WebApplication app)
         {
             var posts = app.MapGroup("posts");
-            posts.MapPost("/", CreatePost);
-            posts.MapGet("/", GetAllPosts);
+            posts.MapPost("/", CreatePost).WithSummary("Create post");
+            posts.MapGet("/", GetAllPosts).WithSummary("Get all posts");
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         public static async Task<IResult> CreatePost()

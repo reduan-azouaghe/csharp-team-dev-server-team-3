@@ -7,7 +7,7 @@ namespace exercise.wwwapi.Endpoints
         public static void ConfigureCohortEndpoints(this WebApplication app)
         {
             var cohorts = app.MapGroup("cohorts");
-            cohorts.MapPost("/", CreateCohort);
+            cohorts.MapPost("/", CreateCohort).WithSummary("Create a cohort");
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         public static async Task<IResult> CreateCohort()

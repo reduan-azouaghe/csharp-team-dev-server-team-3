@@ -1,5 +1,4 @@
-﻿using exercise.models;
-using exercise.wwwapi.DTOs.Responses;
+﻿using exercise.wwwapi.Models;
 using System.Text.Json.Serialization;
 
 namespace exercise.wwwapi.DTOs

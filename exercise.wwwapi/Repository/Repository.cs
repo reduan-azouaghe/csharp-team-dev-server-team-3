@@ -6,60 +6,62 @@ namespace exercise.wwwapi.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private DataContext _db;
-        private DbSet<T> _table = null!;
 
-        public Repository(DataContext dataContext)
+
+        private DataContext _db;
+        private DbSet<T> _table = null;
+       
+        public Repository(DataContext db)
         {
-            _db = dataContext;
+            _db = db;
             _table = _db.Set<T>();
         }
 
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeExpressions)
+        {
+            if (includeExpressions.Any())
+            {
+                var set = includeExpressions
+                    .Aggregate<Expression<Func<T, object>>, IQueryable<T>>
+                     (_table, (current, expression) => current.Include(expression));
+            }
+            return _table.ToList();
+        }
         public async Task<IEnumerable<T>> Get()
         {
             return _table.ToList();
         }
-
-        public async Task<T> Insert(T entity)
+        public IEnumerable<T> GetAll()
         {
-            _table.Add(entity);
-            _db.SaveChanges();
-            return entity;
+            return _table.ToList();
         }
-
-        public async Task<T> Update(T entity)
-        {
-            _table.Attach(entity);
-            _db.Entry(entity).State = EntityState.Modified;
-            _db.SaveChanges();
-            return entity;
-        }
-
-        public async Task<T> Delete(object id)
-        {
-            T entity = _table.Find(id);
-            _table.Remove(entity);
-            _db.SaveChanges();
-            return entity;
-        }
-
-        public async Task<T> GetById(int id)
+        public T GetById(object id)
         {
             return _table.Find(id);
         }
-        public async Task<IEnumerable<T>> GetWithIncludes(params Expression<Func<T, object>>[] includes)
+
+        public void Insert(T obj)
         {
-            IQueryable<T> query = _table;
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
-            return await query.ToListAsync();
+            _table.Add(obj);
+        }
+        public void Update(T obj)
+        {
+            _table.Attach(obj);
+            _db.Entry(obj).State = EntityState.Modified;
         }
 
-        public async Task Save()
+        public void Delete(object id)
         {
-            _db.SaveChangesAsync();
+            T existing = _table.Find(id);
+            _table.Remove(existing);
         }
+
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
+        public DbSet<T> Table { get { return _table; } }
+
     }
 }

@@ -1,9 +1,7 @@
-﻿using exercise.enums;
-using exercise.models;
+﻿using exercise.wwwapi.Configuration;
+using exercise.wwwapi.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.ComponentModel;
-using System.Reflection;
+using System.Numerics;
 
 namespace exercise.wwwapi.Data
 {
@@ -13,14 +11,11 @@ namespace exercise.wwwapi.Data
         {
 
         }
-       
-        public DbSet<User> User { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<Profile> Profile { get; set; }
-        public DbSet<DeliveryLogLine> DeliveryLogLine { get; set; }
-        public DbSet<Cohort> Cohort { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<DeliveryLog> DeliveryLogs { get; set; }
-       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseInMemoryDatabase(databaseName: "Database");
+        }
+   
+        public DbSet<User> Users { get; set; }
     }
 }

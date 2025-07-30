@@ -9,12 +9,7 @@ namespace exercise.wwwapi.Endpoints
             var logs = app.MapGroup("/logs");
             logs.MapPost("/", CreateDeliveryLog).WithSummary("Create a delivery log");
         }
-        /// <summary>
-        /// Creates a new user in the system.
-        /// </summary>
-        /// <remarks>
-        /// This endpoint registers a user with email, password, and role.
-        /// </remarks>        
+     
         [ProducesResponseType(StatusCodes.Status200OK)]
         public static async Task<IResult> CreateDeliveryLog()
         {

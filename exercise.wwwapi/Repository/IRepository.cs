@@ -1,15 +1,19 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace exercise.wwwapi.Repository
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> Get();
-        Task<T> Insert(T entity);
-        Task<T> Update(T entity);
-        Task<T> Delete(object id);
-        Task Save();
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetWithIncludes(params Expression<Func<T, object>>[] includes);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeExpressions);
+        T GetById(object id);
+        void Insert(T obj);
+        void Update(T obj);
+        void Delete(object id);
+        void Save();
+        DbSet<T> Table { get; }
+
     }
 }

@@ -17,7 +17,7 @@ The code in the application is designed to recreate basic functionality that is 
 
 The Client code should allow you to login and display the initial dashboard in almost identical ways, whether the C# or the Node versions of the Server are in use. The functionality is severely limited beyond that, however.
 
-Once you are fully up to speed and working on the project it is perfectly acceptable to change the structure of this code in any way that you see fit (as long as you adhere to whatever process your team has in place). There are sections in the code which need to be refactored (take a look at the `payload/response` package for one example), there are classes which are only there to replicate the functionality of the original Node version (the `Author` class is one example) and there are hard coded responses which need removing. 
+Once you are fully up to speed and working on the project it is perfectly acceptable to change the structure of this code in any way that you see fit, as long as you adhere to whatever process your team has in place and you meet the requirements in the backlog.
 
 ## Enjoy!
 

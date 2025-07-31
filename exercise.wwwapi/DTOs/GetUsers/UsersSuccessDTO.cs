@@ -1,9 +1,9 @@
 ﻿using exercise.wwwapi.Models;
 using System.Text.Json.Serialization;
 
-namespace exercise.wwwapi.DTOs
+namespace exercise.wwwapi.DTOs.GetUsers
 {
-    public class UserDataDto
+    public class UsersSuccessDTO
     {
         [JsonPropertyName("users")]
         public List<User> Users { get; set; }

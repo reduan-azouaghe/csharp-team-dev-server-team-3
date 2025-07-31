@@ -1,0 +1,17 @@
+## run this using: docker compose up 
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: tdsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

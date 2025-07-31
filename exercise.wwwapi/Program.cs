@@ -25,12 +25,11 @@ builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<ILogger, Logger<string>>();
 builder.Services.AddDbContext<DataContext>(options => {
     
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabase"));
     options.LogTo(message => Debug.WriteLine(message));
 
 });
-//authentication verifying who they say they are
-//authorization verifying what they have access to
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,13 +85,11 @@ builder.Services.AddSwaggerGen(s =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger(c =>

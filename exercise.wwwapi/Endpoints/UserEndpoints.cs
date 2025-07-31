@@ -1,5 +1,6 @@
 ﻿using exercise.wwwapi.Configuration;
 using exercise.wwwapi.DTOs;
+using exercise.wwwapi.DTOs.GetUsers;
 using exercise.wwwapi.DTOs.Login;
 using exercise.wwwapi.DTOs.Register;
 using exercise.wwwapi.Helpers;
@@ -34,8 +35,8 @@ namespace exercise.wwwapi.EndPoints
         private static async Task<IResult> GetUsers(IRepository<User> service, string? firstName, ClaimsPrincipal user)
         {
             IEnumerable<User> results = await service.Get();
-            UserDataDto userData = new UserDataDto() { Users = !string.IsNullOrEmpty(firstName) ? results.Where(i => i.Email.Contains(firstName)).ToList() : results.ToList() };
-            ResponseDTO<UserDataDto> response = new ResponseDTO<UserDataDto>() { Status = "success", Data = userData };
+            UsersSuccessDTO userData = new UsersSuccessDTO() { Users = !string.IsNullOrEmpty(firstName) ? results.Where(i => i.Email.Contains(firstName)).ToList() : results.ToList() };
+            ResponseDTO<UsersSuccessDTO> response = new ResponseDTO<UsersSuccessDTO>() { Status = "success", Data = userData };
             return TypedResults.Ok(response);
         }
         [ProducesResponseType(StatusCodes.Status200OK)]

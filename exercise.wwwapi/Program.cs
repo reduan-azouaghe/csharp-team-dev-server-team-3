@@ -26,7 +26,7 @@ builder.Services.AddScoped<ILogger, Logger<string>>();
 builder.Services.AddDbContext<DataContext>(options => {
     
     //options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabase"));
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabase"));
     options.LogTo(message => Debug.WriteLine(message));
 
 });

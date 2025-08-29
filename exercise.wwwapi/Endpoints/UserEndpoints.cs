@@ -49,6 +49,7 @@ namespace exercise.wwwapi.EndPoints
 
             // TODO: Add salt to password
             // TODO: Ensure valid password
+            //Validator.Password(request.password);
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.password);
 
             var user = new User();

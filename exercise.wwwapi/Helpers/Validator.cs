@@ -3,14 +3,14 @@ using System.Text.RegularExpressions;
 
 namespace exercise.wwwapi.Helpers
 {
-    public class Validator
+    public static class Validator
     {
-        public string Password(string passwordString)
+        public static string Password(string passwordString)
         {
-            //TODO: Not less than 8 characters       | Done
-            //TODO: Atleast one uppercase            | Done
-            //TODO: Atleast one number               | Done
-            //TODO: Atleast one special character    | Done
+            // Not less than 8 characters       | Done
+            // Atleast one uppercase            | Done
+            // Atleast one number               | Done
+            // Atleast one special character    | Done
 
             if (passwordString.Count() < 8) return "Too few characters";
 

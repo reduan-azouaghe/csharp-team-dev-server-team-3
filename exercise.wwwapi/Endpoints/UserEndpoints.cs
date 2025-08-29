@@ -47,9 +47,11 @@ namespace exercise.wwwapi.EndPoints
             if (service.GetAll().Where(u => u.Email == request.email).Any()) return Results.Conflict(new ResponseDTO<RegisterFailureDTO>() { Status = "Fail" });
 
 
-            // TODO: Add salt to password
+            // TODO: Add salt to password?
             // TODO: Ensure valid password
-            //Validator.Password(request.password);
+            //string validationResult = Validator.Password(request.password);
+            //if (validationResult != "Accepted") return TypedResults.BadRequest(new ResponseDTO<RegisterFailureDTO>() { Status = "Fail" });
+
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.password);
 
             var user = new User();

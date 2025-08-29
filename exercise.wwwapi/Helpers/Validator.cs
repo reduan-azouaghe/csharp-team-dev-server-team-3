@@ -4,6 +4,7 @@
     {
         public bool Password(string passwordString)
         {
+            throw new NotImplementedException();
             //TODO: Not less than 8 characters       | Done
             //TODO: Atleast one uppercase            | 
             //TODO: Atleast one number               |

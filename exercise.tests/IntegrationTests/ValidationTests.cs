@@ -35,7 +35,9 @@ namespace exercise.tests.IntegrationTests
         [TestCase("noupper123!",  HttpStatusCode.BadRequest)]
         [TestCase("NoNumber!",  HttpStatusCode.BadRequest)]
         [TestCase("NoSpecial1",  HttpStatusCode.BadRequest)]
-        [TestCase("V3rySp3ci&l",  HttpStatusCode.BadRequest)]
+        [TestCase("V3rySp3ci&l", HttpStatusCode.OK)]
+        [TestCase("", HttpStatusCode.BadRequest)]
+        [TestCase(null, HttpStatusCode.BadRequest)]
         public async Task validatePasswordStatus(string input, HttpStatusCode statusCode)
         {
             // Arrange
@@ -51,6 +53,7 @@ namespace exercise.tests.IntegrationTests
             Assert.That(response.StatusCode, Is.EqualTo(statusCode));
         }
 
+        //[TestCase(5, "Something went wrong!")]
         [TestCase("Valid123!", "Accepted")]
         [TestCase("short1!", "Too few characters")]
         [TestCase("noupper123!", "Missing uppercase characters")]
@@ -59,7 +62,6 @@ namespace exercise.tests.IntegrationTests
         [TestCase("V3rySp3ci&l", "Accepted")]
         [TestCase("", "Something went wrong!")]
         [TestCase(null, "Something went wrong!")]
-        [TestCase(5, "Something went wrong!")]
         public async Task validatePasswordMessage(string input, string expected)
         {
             // Arrange

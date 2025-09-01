@@ -34,7 +34,7 @@ namespace exercise.wwwapi.Endpoints
                 return TypedResults.BadRequest("Something went wrong!");
             string result = Validator.Password(passwordDTO.password);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
-            else if (result == "Accepted") return TypedResults.Ok();
+            else if (result == "Accepted") return TypedResults.Ok(result);
             else return TypedResults.BadRequest(result);
         }
     }

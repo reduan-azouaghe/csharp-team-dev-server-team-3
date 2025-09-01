@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
 using System.Net.Mail;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercise.wwwapi.Helpers
 {
@@ -25,21 +26,10 @@ namespace exercise.wwwapi.Helpers
             return "Accepted";
         }
 
-        public static string Email(string emailString, List<string> emails)
+        public static string Email(string emailString)
         {
-            // Valid email format                | Done
-            // Email already exist in database
-
-            if (string.IsNullOrWhiteSpace(emailString)) return "Email string is empty";
-            try
-            {
-                if (new MailAddress(emailString).Address != emailString) return "Invalid email format";
-            }
-            catch 
-            {
-                return "Invalid email format";
-            }
-            // TODO: Get all emails in Endpoint where this method is called. Check if emailString already exists.
+            if (!new EmailAddressAttribute().IsValid(emailString)) return "Invalid email format";
+            if (!Regex.IsMatch(emailString, @"@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")) return "Invalid email domain";
             return "Accepted";
         }
     }

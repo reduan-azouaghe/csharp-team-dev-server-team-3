@@ -50,5 +50,19 @@ namespace exercise.wwwapi.Endpoints
             else if (result == "Accepted") return TypedResults.Ok();
             else return TypedResults.BadRequest(result);
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        private static IResult ValidateUsername(IRepository<User> repository, UsernameDTO usernameDTO)
+        {
+            if (usernameDTO == null || string.IsNullOrEmpty(usernameDTO.Username))
+                return TypedResults.BadRequest("Empty input");
+            string result = Helpers.Validator.Username(usernameDTO.Username);
+            if (result == null) return TypedResults.BadRequest("Empty response from server");
+            if (result != "Accepted") return TypedResults.BadRequest(result);
+            var usernameExists = repository.GetAllFiltered(q => q.Username == usernameDTO.Username);
+            if (usernameExists.Count() != 0) return TypedResults.BadRequest("Username is already in use");
+            return TypedResults.Ok();
+        }
     }
 }

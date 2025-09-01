@@ -42,7 +42,7 @@ namespace exercise.wwwapi.Helpers
 
         public static string Username(string usernameString)
         {
-            // Not in database                  |
+            // Not in database                  | Done in ValidationEndpoint
             // Only a-z 0-9 and -               | Done
             // length less than 17              | Done
 
@@ -50,10 +50,8 @@ namespace exercise.wwwapi.Helpers
 
             string regexPattern = "^[a-z0-9-]+$";
             if (!Regex.IsMatch(usernameString, regexPattern)) return "Username must only contain lowercase letters 0-9 and -";
-            
 
-
-
+            return "Accepted";
 
         }
     }

@@ -8,7 +8,3 @@
         public string? Username { get; set; }
     }
 }
-
-
-
-

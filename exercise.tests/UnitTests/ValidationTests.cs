@@ -1,0 +1,25 @@
+﻿using exercise.wwwapi.Helpers;
+
+namespace exercise.tests.UnitTests;
+public class ValidationTests
+{
+
+    [TestCase("Valid123!", "Accepted")]
+    [TestCase("short1!", "Too few characters")]
+    [TestCase("noupper123!", "Missing uppercase characters")]
+    [TestCase("NoNumber!", "Missing number(s) in password")]
+    [TestCase("NoSpecial1", "Missing special character")]
+    [TestCase("V3rySp3ci&l", "Accepted")]
+    public void ValidatePassword(string input, string expected)
+    {
+        // act 
+        // no setup needed as Validator class is static
+
+        // arrange
+        string result = Validator.Password(input);
+
+        // assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.EqualTo(expected));
+    }
+}

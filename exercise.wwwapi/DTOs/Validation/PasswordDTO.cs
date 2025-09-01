@@ -5,6 +5,6 @@
     /// </summary>
     public class PasswordDTO
     {
-        public string password { get; set; }
+        public string? password { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace exercise.wwwapi.Endpoints
         {
             var validatiors = app.MapGroup("/validation");
             validatiors.MapPost("/password", ValidatePassword).WithSummary("Validate a password");
-            validatiors.MapPost("/username", ValidateUsername).WithSummary("Validate a Username");
+            validatiors.MapGet("/username/{username}", ValidateUsername).WithSummary("Validate a Username");
             validatiors.MapPost("/email", ValidateEmail).WithSummary("Validate an email address");
 
         }
@@ -49,36 +49,36 @@ namespace exercise.wwwapi.Endpoints
         {
             if (passwordDTO == null || string.IsNullOrEmpty(passwordDTO.password))
                 return TypedResults.BadRequest("Something went wrong!");
-            string result = Helpers.Validator.Password(password.password);
+            string result = Helpers.Validator.Password(passwordDTO.password);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
             else if (result == "Accepted") return TypedResults.Ok(result);
             else return TypedResults.BadRequest(result);
         }
 
+        /// <summary>
+        /// Validates a username using custom username rules.
+        /// Checks if username is already in database, bad request if it exists<br/>
+        /// </summary>
+        /// <param name="username">A <see cref="UsernameDTO"/> object containing the username to validate.</param>
+        /// 
+        /// <returns>
+        /// 200 OK response if the username is accepted.<br/>
+        /// 400 Bad Request with a message if the username is invalid or if validation fails. 
+        /// </returns>
+        /// <response code="200">Username is valid and accepted.</response>
+        /// <response code="400">Username is invalid or validation failed.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static IResult ValidateUsername(UsernameDTO usernameDTO)
+        private static IResult ValidateUsername(IRepository<User> repository, UsernameDTO username)
         {
-            if (usernameDTO == null || string.IsNullOrEmpty(usernameDTO.Username))
-                return TypedResults.BadRequest("Something went wrong!");
-            string result = Validator.Username(usernameDTO.Username);
-            if (result == null) return TypedResults.BadRequest("Something went wrong!");
-            else if (result == "Accepted") return TypedResults.Ok();
-            else return TypedResults.BadRequest(result);
-        }
-
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static IResult ValidateUsername(IRepository<User> repository, UsernameDTO usernameDTO)
-        {
-            if (usernameDTO == null || string.IsNullOrEmpty(usernameDTO.Username))
+            if (username == null || string.IsNullOrEmpty(username.Username))
                 return TypedResults.BadRequest("Empty input");
-            string result = Helpers.Validator.Username(usernameDTO.Username);
+            string result = Helpers.Validator.Username(username.Username);
             if (result == null) return TypedResults.BadRequest("Empty response from server");
-            if (result != "Accepted") return TypedResults.BadRequest(result);
-            var usernameExists = repository.GetAllFiltered(q => q.Username == usernameDTO.Username);
+            var usernameExists = repository.GetAllFiltered(q => q.Username == username.Username);
             if (usernameExists.Count() != 0) return TypedResults.BadRequest("Username is already in use");
-            return TypedResults.Ok();
+            if (result == "Accepted") return TypedResults.Ok(result);
+            return TypedResults.BadRequest(result);
         }
     }
 }

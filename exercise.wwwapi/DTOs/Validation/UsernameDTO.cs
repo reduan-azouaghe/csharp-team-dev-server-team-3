@@ -5,6 +5,6 @@
     /// </summary>
     public class UsernameDTO
     {
-        public string Username { get; set; }
+        public string? Username { get; set; }
     }
 }

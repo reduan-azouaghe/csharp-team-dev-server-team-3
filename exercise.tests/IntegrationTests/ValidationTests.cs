@@ -86,5 +86,62 @@ namespace exercise.tests.IntegrationTests
             Console.WriteLine("Message: " + message);
             Assert.That(message?.ToString(), Is.EqualTo(expected));
         }
+
+        [TestCase("valid@email.com", HttpStatusCode.OK)]
+        [TestCase("valid@email.com.no", HttpStatusCode.OK)]
+        [TestCase("valid.mail@email.com", HttpStatusCode.OK)]
+        [TestCase("invalid.com", HttpStatusCode.BadRequest)]
+        [TestCase("invalid@", HttpStatusCode.BadRequest)]
+        [TestCase("invalid", HttpStatusCode.BadRequest)]
+        [TestCase("invalid@..no", HttpStatusCode.BadRequest)]
+        [TestCase("invalid@text", HttpStatusCode.BadRequest)]
+        public async Task ValidateEmailStatus(string input, HttpStatusCode statusCode)
+        {
+            // Arrange
+            EmailDTO body = new EmailDTO { Email = input };
+            var json = JsonSerializer.Serialize(body);
+            Console.WriteLine(json.ToString());
+            var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/validation/email", requestBody);
+
+
+            // Assert
+            Assert.That(response.StatusCode, Is.EqualTo(statusCode));
+        }
+
+        [TestCase("valid@email.com", "Accepted")]
+        [TestCase("valid@email.com.no", "Accepted")]
+        [TestCase("valid.mail@email.com", "Accepted")]
+        [TestCase("invalid.com", "Invalid email format")]
+        [TestCase("invalid@", "Invalid email format")]
+        [TestCase("invalid", "Invalid email format")]
+        [TestCase("invalid@..no", "Invalid email domain")]
+        [TestCase("invalid@text", "Invalid email domain")]
+        public async Task ValidateEmailMessage(string input, string expected)
+        {
+            // Arrange
+            EmailDTO body = new EmailDTO { Email = input };
+            var json = JsonSerializer.Serialize(body);
+            Console.WriteLine(json.ToString());
+            var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/validation/email", requestBody);
+            Console.WriteLine("r,", response);
+
+            // Assert
+            var contentString = await response.Content.ReadAsStringAsync();
+
+            JsonNode? message = null;
+            if (!string.IsNullOrWhiteSpace(contentString))
+            {
+                message = JsonNode.Parse(contentString);
+            }
+
+            Console.WriteLine("Message: " + message);
+            Assert.That(message?.ToString(), Is.EqualTo(expected));
+        }
     }
 }

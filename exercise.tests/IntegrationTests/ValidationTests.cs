@@ -38,7 +38,7 @@ namespace exercise.tests.IntegrationTests
         [TestCase("V3rySp3ci&l", HttpStatusCode.OK)]
         [TestCase("", HttpStatusCode.BadRequest)]
         [TestCase(null, HttpStatusCode.BadRequest)]
-        public async Task validatePasswordStatus(string input, HttpStatusCode statusCode)
+        public async Task ValidatePasswordStatus(string input, HttpStatusCode statusCode)
         {
             // Arrange
             PasswordDTO body = new PasswordDTO { password = input };
@@ -62,7 +62,7 @@ namespace exercise.tests.IntegrationTests
         [TestCase("V3rySp3ci&l", "Accepted")]
         [TestCase("", "Something went wrong!")]
         [TestCase(null, "Something went wrong!")]
-        public async Task validatePasswordMessage(string input, string expected)
+        public async Task ValidatePasswordMessage(string input, string expected)
         {
             // Arrange
             PasswordDTO body = new PasswordDTO { password = input };

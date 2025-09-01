@@ -23,9 +23,10 @@ namespace exercise.wwwapi.Endpoints
         private static IResult ValidateEmail(IRepository<User> repository, EmailDTO email)
         {
             string result = Helpers.Validator.Email(email.Email);
-            var emailExists = repository.GetAllFiltered(q => q.Email == email.Email);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
             if (result != "Accepted") return TypedResults.BadRequest(result);
+            var emailExists = repository.GetAllFiltered(q => q.Email == email.Email);
+            if (emailExists.Count() != 0) return TypedResults.BadRequest("Email already exists");
             return TypedResults.Ok();
         }
 

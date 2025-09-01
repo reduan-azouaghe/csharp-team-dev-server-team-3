@@ -37,7 +37,7 @@ namespace exercise.tests.IntegrationTests
         [TestCase("NoSpecial1",  HttpStatusCode.BadRequest)]
         [TestCase("V3rySp3ci&l", HttpStatusCode.OK)]
         [TestCase("", HttpStatusCode.BadRequest)]
-        [TestCase(null, HttpStatusCode.BadRequest)]
+        [TestCase(null!, HttpStatusCode.BadRequest)]
         public async Task ValidatePasswordStatus(string input, HttpStatusCode statusCode)
         {
             // Arrange
@@ -61,7 +61,7 @@ namespace exercise.tests.IntegrationTests
         [TestCase("NoSpecial1", "Missing special character")]
         [TestCase("V3rySp3ci&l", "Accepted")]
         [TestCase("", "Something went wrong!")]
-        [TestCase(null, "Something went wrong!")]
+        [TestCase(null!, "Something went wrong!")]
         public async Task ValidatePasswordMessage(string input, string expected)
         {
             // Arrange

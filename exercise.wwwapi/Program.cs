@@ -133,3 +133,5 @@ app.ConfigurePostEndpoints();
 app.ConfigureValidationEndpoint();
 
 app.Run();
+
+public partial class Program { } // needed for testing - please ignore

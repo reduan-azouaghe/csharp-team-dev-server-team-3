@@ -37,5 +37,24 @@ namespace exercise.wwwapi.Helpers
             if (!Regex.IsMatch(passwordString, regexPattern)) return "Missing special character";
             return "Accepted";
         }
+
+
+
+        public static string Username(string usernameString)
+        {
+            // Not in database                  |
+            // Only a-z 0-9 and -               | Done
+            // length less than 17              | Done
+
+            if (usernameString.Count() > 17) return "Username length must be shorter than 17";
+
+            string regexPattern = "^[a-z0-9-]+$";
+            if (!Regex.IsMatch(usernameString, regexPattern)) return "Username must only contain lowercase letters 0-9 and -";
+            
+
+
+
+
+        }
     }
 }

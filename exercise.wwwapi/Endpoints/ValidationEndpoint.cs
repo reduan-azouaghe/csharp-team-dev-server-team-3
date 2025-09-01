@@ -14,6 +14,7 @@ namespace exercise.wwwapi.Endpoints
         {
             var validatiors = app.MapGroup("/validation");
             validatiors.MapPost("/password", ValidatePassword).WithSummary("Validate a password");
+            validatiors.MapPost("/username", ValidateUsername).WithSummary("Validate a Username");
         }
 
         /// <summary>
@@ -33,6 +34,18 @@ namespace exercise.wwwapi.Endpoints
             if (passwordDTO == null || string.IsNullOrEmpty(passwordDTO.password))
                 return TypedResults.BadRequest("Something went wrong!");
             string result = Validator.Password(passwordDTO.password);
+            if (result == null) return TypedResults.BadRequest("Something went wrong!");
+            else if (result == "Accepted") return TypedResults.Ok();
+            else return TypedResults.BadRequest(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        private static IResult ValidateUsername(UsernameDTO usernameDTO)
+        {
+            if (usernameDTO == null || string.IsNullOrEmpty(usernameDTO.Username))
+                return TypedResults.BadRequest("Something went wrong!");
+            string result = Validator.Username(usernameDTO.Username);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
             else if (result == "Accepted") return TypedResults.Ok();
             else return TypedResults.BadRequest(result);

@@ -18,6 +18,7 @@ namespace exercise.wwwapi.Endpoints
             validatiors.MapPost("/email", ValidateEmail).WithSummary("Validate an email address");
         }
 
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         private static IResult ValidateEmail(IRepository<User> repository, EmailDTO email)
@@ -28,14 +29,26 @@ namespace exercise.wwwapi.Endpoints
             if (result != "Accepted") return TypedResults.BadRequest(result);
             return TypedResults.Ok();
         }
-
+  
+        /// <summary>
+        /// Validates a password using custom password rules.
+        /// </summary>
+        /// <param name="password">A <see cref="PasswordDTO"/> object containing the password to validate.</param>
+        /// <returns>
+        /// 200 OK response if the password is accepted.<br/>
+        /// 400 Bad Request with a message if the password is invalid or if validation fails. 
+        /// </returns>
+        /// <response code="200">Password is valid and accepted.</response>
+        /// <response code="400">Password is invalid or validation failed.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static  IResult ValidatePassword(PasswordDTO password)
+        private static IResult ValidatePassword(PasswordDTO passwordDTO)
         {
+            if (passwordDTO == null || string.IsNullOrEmpty(passwordDTO.password))
+                return TypedResults.BadRequest("Something went wrong!");
             string result = Helpers.Validator.Password(password.password);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
-            else if (result == "Accepted") return TypedResults.Ok();
+            else if (result == "Accepted") return TypedResults.Ok(result);
             else return TypedResults.BadRequest(result);
         }
     }

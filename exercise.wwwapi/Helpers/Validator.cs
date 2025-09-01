@@ -7,6 +7,20 @@ namespace exercise.wwwapi.Helpers
 {
     public static class Validator
     {
+
+        /// <summary>
+        /// Validates a password string against a set of security rules.<br/>
+        /// - Minimum length of 8 characters. <br/>
+        /// - At least one uppercase letter.<br/>
+        /// - At least one numeric digit.<br/>
+        /// - At least one special character from the set: !@#$%^&amp;*()-_=+{};:',./\|~
+        /// </summary>
+        /// <param name="passwordString">The password string to validate.</param>
+        /// <returns>
+        /// A string indicating the result of the validation:<br/>
+        /// - "Accepted" if the password meets all criteria.<br/>
+        /// - A descriptive error message if any rule is violated.
+        /// </returns>
         public static string Password(string passwordString)
         {
             // Not less than 8 characters       | Done

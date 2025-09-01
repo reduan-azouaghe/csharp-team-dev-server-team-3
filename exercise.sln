@@ -9,9 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
+		IntegrationTestTemplate.txt = IntegrationTestTemplate.txt
 		README.md = README.md
+		UnitTestTemplate.txt = UnitTestTemplate.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exercise.tests", "exercise.tests\exercise.tests.csproj", "{693E9261-FBC0-4112-95AF-2492AB6F1DE9}"
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams_and_other_cool_stuff", "Diagrams_and_other_cool_stuff", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\..\Downloads\teamdevsim_v2.drawio = ..\..\..\..\Downloads\teamdevsim_v2.drawio
@@ -28,6 +31,10 @@ Global
 		{7C5AF8AF-547A-468F-A7D9-3DC11407A35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C5AF8AF-547A-468F-A7D9-3DC11407A35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C5AF8AF-547A-468F-A7D9-3DC11407A35D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693E9261-FBC0-4112-95AF-2492AB6F1DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693E9261-FBC0-4112-95AF-2492AB6F1DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693E9261-FBC0-4112-95AF-2492AB6F1DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693E9261-FBC0-4112-95AF-2492AB6F1DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

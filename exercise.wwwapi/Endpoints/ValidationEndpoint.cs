@@ -21,8 +21,8 @@ namespace exercise.wwwapi.Endpoints
         /// </summary>
         /// <param name="password">A <see cref="PasswordDTO"/> object containing the password to validate.</param>
         /// <returns>
-        /// Returns a 200 OK response if the password is accepted.
-        /// Returns a 400 Bad Request with a message if the password is invalid or if validation fails.
+        /// 200 OK response if the password is accepted.<br/>
+        /// 400 Bad Request with a message if the password is invalid or if validation fails. 
         /// </returns>
         /// <response code="200">Password is valid and accepted.</response>
         /// <response code="400">Password is invalid or validation failed.</response>

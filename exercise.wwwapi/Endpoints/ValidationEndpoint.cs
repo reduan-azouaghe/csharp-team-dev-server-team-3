@@ -5,6 +5,7 @@ using exercise.wwwapi.Helpers;
 using exercise.wwwapi.Models;
 using exercise.wwwapi.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercise.wwwapi.Endpoints
 {
@@ -15,8 +16,23 @@ namespace exercise.wwwapi.Endpoints
             var validatiors = app.MapGroup("/validation");
             validatiors.MapPost("/password", ValidatePassword).WithSummary("Validate a password");
             validatiors.MapPost("/username", ValidateUsername).WithSummary("Validate a Username");
+            validatiors.MapPost("/email", ValidateEmail).WithSummary("Validate an email address");
+
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        private static IResult ValidateEmail(IRepository<User> repository, EmailDTO email)
+        {
+            string result = Helpers.Validator.Email(email.Email);
+            if (result == null) return TypedResults.BadRequest("Something went wrong!");
+            if (result != "Accepted") return TypedResults.BadRequest(result);
+            var emailExists = repository.GetAllFiltered(q => q.Email == email.Email);
+            if (emailExists.Count() != 0) return TypedResults.BadRequest("Email already exists");
+            return TypedResults.Ok();
+        }
+  
         /// <summary>
         /// Validates a password using custom password rules.
         /// </summary>
@@ -33,9 +49,9 @@ namespace exercise.wwwapi.Endpoints
         {
             if (passwordDTO == null || string.IsNullOrEmpty(passwordDTO.password))
                 return TypedResults.BadRequest("Something went wrong!");
-            string result = Validator.Password(passwordDTO.password);
+            string result = Helpers.Validator.Password(password.password);
             if (result == null) return TypedResults.BadRequest("Something went wrong!");
-            else if (result == "Accepted") return TypedResults.Ok();
+            else if (result == "Accepted") return TypedResults.Ok(result);
             else return TypedResults.BadRequest(result);
         }
 

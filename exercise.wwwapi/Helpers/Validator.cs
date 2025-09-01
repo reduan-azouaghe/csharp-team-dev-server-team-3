@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercise.wwwapi.Helpers
 {
@@ -51,6 +53,13 @@ namespace exercise.wwwapi.Helpers
             string regexPattern = "^[a-z0-9-]+$";
             if (!Regex.IsMatch(usernameString, regexPattern)) return "Username must only contain lowercase letters 0-9 and -";
 
+            return "Accepted";
+
+          
+        public static string Email(string emailString)
+        {
+            if (!new EmailAddressAttribute().IsValid(emailString)) return "Invalid email format";
+            if (!Regex.IsMatch(emailString, @"@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")) return "Invalid email domain";
             return "Accepted";
 
         }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercise.wwwapi.Helpers
 {
@@ -35,6 +37,13 @@ namespace exercise.wwwapi.Helpers
             // Accept only !@#$%^&*()-_=+{};:',./\|~
             string regexPattern = ".*[!@#$%^&*()\\-_=+{};:',./\\\\|~].*";
             if (!Regex.IsMatch(passwordString, regexPattern)) return "Missing special character";
+            return "Accepted";
+        }
+
+        public static string Email(string emailString)
+        {
+            if (!new EmailAddressAttribute().IsValid(emailString)) return "Invalid email format";
+            if (!Regex.IsMatch(emailString, @"@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")) return "Invalid email domain";
             return "Accepted";
         }
     }

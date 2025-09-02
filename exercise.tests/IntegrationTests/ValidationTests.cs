@@ -100,14 +100,9 @@ namespace exercise.tests.IntegrationTests
         public async Task ValidateEmailStatus(string input, HttpStatusCode statusCode)
         {
             // Arrange
-            EmailDTO body = new EmailDTO { Email = input };
-            var json = JsonSerializer.Serialize(body);
-            Console.WriteLine(json.ToString());
-            var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/validation/email", requestBody);
-
+            var response = await _client.GetAsync($"/validation/email?email={input}");
 
             // Assert
             Assert.That(response.StatusCode, Is.EqualTo(statusCode));
@@ -126,14 +121,9 @@ namespace exercise.tests.IntegrationTests
         public async Task ValidateEmailMessage(string input, string expected)
         {
             // Arrange
-            EmailDTO body = new EmailDTO { Email = input };
-            var json = JsonSerializer.Serialize(body);
-            Console.WriteLine(json.ToString());
-            var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/validation/email", requestBody);
-            Console.WriteLine("r,", response);
+            var response = await _client.GetAsync($"/validation/email?email={input}");
 
             // Assert
             var contentString = await response.Content.ReadAsStringAsync();

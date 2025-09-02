@@ -16,7 +16,7 @@ namespace exercise.wwwapi.Endpoints
             var validatiors = app.MapGroup("/validation");
             validatiors.MapPost("/password", ValidatePassword).WithSummary("Validate a password");
             validatiors.MapGet("/username/{username}", ValidateUsername).WithSummary("Validate a Username");
-            validatiors.MapGet("/email", ValidateEmail).WithSummary("Validate an email address");
+            validatiors.MapGet("/email/{email}", ValidateEmail).WithSummary("Validate an email address");
 
         }
 
@@ -33,7 +33,7 @@ namespace exercise.wwwapi.Endpoints
         /// <response code="400">Email is invalid or already exists</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static IResult ValidateEmail(IRepository<User> repository, [FromQuery] string email)
+        private static IResult ValidateEmail(IRepository<User> repository, string email)
         {
             if (email == null || string.IsNullOrEmpty(email)) return TypedResults.BadRequest("Something went wrong!");
             string result = Helpers.Validator.Email(email);

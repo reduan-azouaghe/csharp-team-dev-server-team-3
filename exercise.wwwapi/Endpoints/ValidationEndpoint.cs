@@ -23,7 +23,8 @@ namespace exercise.wwwapi.Endpoints
         /// <summary>
         /// Validates an email using custom email rules.
         /// </summary>
-        /// <param name="email">The email string to validate</param>
+        /// <param name="repository"> A <see cref="IRepository{User}"/> object used to query the user data source for existing emails.</param>
+        /// <param name="email">The email string to validate.</param>
         /// <returns>
         /// 200 OK response with a message if the password is accepted.<br/>
         /// 400 Bad Request with a message if the email is invalid or if email already exists in database.

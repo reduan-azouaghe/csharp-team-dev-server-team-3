@@ -69,13 +69,13 @@ namespace exercise.wwwapi.Endpoints
         /// <response code="400">Username is invalid or validation failed.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static IResult ValidateUsername(IRepository<User> repository, UsernameDTO username)
+        private static IResult ValidateUsername(IRepository<User> repository, string username)
         {
-            if (username == null || string.IsNullOrEmpty(username.Username))
+            if (username == null || string.IsNullOrEmpty(username))
                 return TypedResults.BadRequest("Empty input");
-            string result = Helpers.Validator.Username(username.Username);
+            string result = Helpers.Validator.Username(username);
             if (result == null) return TypedResults.BadRequest("Empty response from server");
-            var usernameExists = repository.GetAllFiltered(q => q.Username == username.Username);
+            var usernameExists = repository.GetAllFiltered(q => q.Username == username);
             if (usernameExists.Count() != 0) return TypedResults.BadRequest("Username is already in use");
             if (result == "Accepted") return TypedResults.Ok(result);
             return TypedResults.BadRequest(result);

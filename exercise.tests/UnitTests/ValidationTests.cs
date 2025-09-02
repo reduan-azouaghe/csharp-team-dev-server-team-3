@@ -31,6 +31,8 @@ public class ValidationTests
     [TestCase("invalid", "Invalid email format")]
     [TestCase("invalid@..no", "Invalid email domain")]
     [TestCase("invalid@text", "Invalid email domain")]
+    [TestCase("invalid@.email.com", "Invalid email domain")]
+    [TestCase("invalid@email.com.", "Invalid email domain")]
     public void ValidateEmail(string input, string expected)
     {
         // act 

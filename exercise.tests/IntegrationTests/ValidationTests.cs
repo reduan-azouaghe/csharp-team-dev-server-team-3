@@ -95,6 +95,8 @@ namespace exercise.tests.IntegrationTests
         [TestCase("invalid", HttpStatusCode.BadRequest)]
         [TestCase("invalid@..no", HttpStatusCode.BadRequest)]
         [TestCase("invalid@text", HttpStatusCode.BadRequest)]
+        [TestCase("invalid@.email.com", HttpStatusCode.BadRequest)]
+        [TestCase("invalid@email.com.", HttpStatusCode.BadRequest)]
         public async Task ValidateEmailStatus(string input, HttpStatusCode statusCode)
         {
             // Arrange
@@ -119,6 +121,8 @@ namespace exercise.tests.IntegrationTests
         [TestCase("invalid", "Invalid email format")]
         [TestCase("invalid@..no", "Invalid email domain")]
         [TestCase("invalid@text", "Invalid email domain")]
+        [TestCase("invalid@.email.com", "Invalid email domain")]
+        [TestCase("invalid@email.com.", "Invalid email domain")]
         public async Task ValidateEmailMessage(string input, string expected)
         {
             // Arrange

@@ -35,6 +35,10 @@ namespace exercise.wwwapi.Repository
         {
             return _table.ToList();
         }
+        public IEnumerable<T> GetAllFiltered(Expression<Func<T, bool>> filter)
+        {
+            return _table.Where(filter).ToList();
+        }
         public T GetById(object id)
         {
             return _table.Find(id);

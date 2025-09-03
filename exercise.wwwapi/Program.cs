@@ -25,6 +25,7 @@ builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<ILogger, Logger<string>>();
 builder.Services.AddDbContext<DataContext>(options => {
     
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabase"));
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabase"));
     options.LogTo(message => Debug.WriteLine(message));
 
@@ -129,4 +130,8 @@ app.ConfigureCohortEndpoints();
 
 app.ConfigurePostEndpoints();
 
+app.ConfigureValidationEndpoint();
+
 app.Run();
+
+public partial class Program { } // needed for testing - please ignore

@@ -23,10 +23,6 @@ var config = new ConfigurationSettings();
 builder.Services.AddScoped<IConfigurationSettings, ConfigurationSettings>();
 builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<ILogger, Logger<string>>();
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-    .AddEnvironmentVariables();
 
 builder.Services.AddDbContext<DataContext>(options => {
     

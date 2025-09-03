@@ -5,8 +5,10 @@
         IConfiguration _configuration;
         public ConfigurationSettings()
         {
-            
-            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Debug.json").Build();
+
+            _configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.Debug.json", optional: true).Build();
         }
         public string GetValue(string key)
         {

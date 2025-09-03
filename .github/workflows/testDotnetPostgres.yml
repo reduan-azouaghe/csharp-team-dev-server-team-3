@@ -26,15 +26,16 @@ jobs:
           --health-retries=10
 
     env:
+      CONFIGURATION: Debug
       EF_PROJECT: exercise.wwwapi
       STARTUP_PROJECT: exercise.wwwapi
-      # ASP.NET Core env var override for appsettings: ConnectionStrings:DefaultConnectionString
+      # Overrides appsettings: ConnectionStrings:DefaultConnectionString
       ConnectionStrings__DefaultConnectionString: Host=localhost;Port=5432;Database=tdsdb;Username=admin;Password=secret123
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup .NET
+      - name: Setup .NET (net9.0)
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: "9.0.x"
@@ -44,10 +45,8 @@ jobs:
           dotnet tool update --global dotnet-ef || dotnet tool install --global dotnet-ef
           echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Restore & Build
-        run: |
-          dotnet restore $STARTUP_PROJECT
-          dotnet build $STARTUP_PROJECT -c Release --no-restore
+      - name: Restore
+        run: dotnet restore $STARTUP_PROJECT
 
       - name: Wait for Postgres to be healthy
         run: |
@@ -70,15 +69,15 @@ jobs:
             --project "$EF_PROJECT" \
             --startup-project "$STARTUP_PROJECT" \
             --output-dir Migrations \
-            --no-build
+            --configuration $CONFIGURATION
 
       - name: Apply EF Core migrations
         run: |
           dotnet ef database update \
             --project "$EF_PROJECT" \
             --startup-project "$STARTUP_PROJECT" \
-            --no-build \
+            --configuration $CONFIGURATION \
             --connection "$ConnectionStrings__DefaultConnectionString"
 
       - name: Run tests
-        run: dotnet test --no-build -c Release
+        run: dotnet test -c $CONFIGURATION

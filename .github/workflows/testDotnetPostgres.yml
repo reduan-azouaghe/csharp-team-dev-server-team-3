@@ -29,8 +29,8 @@ jobs:
       CONFIGURATION: Debug
       EF_PROJECT: exercise.wwwapi
       STARTUP_PROJECT: exercise.wwwapi
-      # Overrides appsettings: ConnectionStrings:DefaultConnectionString
-      ConnectionStrings__DefaultConnectionString: Host=localhost;Port=5432;Database=tdsdb;Username=admin;Password=secret123
+      # Maps to Configuration["ConnectionStrings:LocalDatabase"]
+      ConnectionStrings__LocalDatabase: Host=localhost;Port=5432;Database=tdsdb;Username=admin;Password=secret123
 
     steps:
       - uses: actions/checkout@v3
@@ -77,7 +77,7 @@ jobs:
             --project "$EF_PROJECT" \
             --startup-project "$STARTUP_PROJECT" \
             --configuration $CONFIGURATION \
-            --connection "$ConnectionStrings__DefaultConnectionString"
+            --connection "$ConnectionStrings__LocalDatabase"
 
       - name: Run tests
         run: dotnet test -c $CONFIGURATION

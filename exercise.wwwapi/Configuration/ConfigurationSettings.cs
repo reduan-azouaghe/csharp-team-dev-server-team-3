@@ -6,7 +6,7 @@
         public ConfigurationSettings()
         {
             
-            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Debug.json").Build();
         }
         public string GetValue(string key)
         {

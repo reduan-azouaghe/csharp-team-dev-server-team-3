@@ -7,7 +7,7 @@
         {
 
             _configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Debug.json", optional: true).Build();
         }
         public string GetValue(string key)

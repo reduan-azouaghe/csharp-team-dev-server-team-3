@@ -5,6 +5,7 @@
         IConfiguration _configuration;
         public ConfigurationSettings()
         {
+            
             _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         }
         public string GetValue(string key)

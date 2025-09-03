@@ -29,7 +29,7 @@ jobs:
       CONFIGURATION: Debug
       EF_PROJECT: exercise.wwwapi
       STARTUP_PROJECT: exercise.wwwapi
-      ASPNETCORE_ENVIRONMENT: CI
+      ASPNETCORE_ENVIRONMENT: Debug
       ConnectionStrings__LocalDatabase: Host=localhost;Port=5432;Database=tdsdb;Username=admin;Password=secret123
 
     steps:
